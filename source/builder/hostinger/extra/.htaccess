@@ -1,0 +1,40 @@
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Force HTTPS: remove the "#" from the next 3 lines ONLY once the SSL certificate is active.
+# RewriteCond %{HTTPS} off
+# RewriteCond %{REQUEST_URI} !^/\.well-known/
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# The article dashboard stays on Netlify.
+RewriteRule ^vogin(/.*)?$ https://kennys-international.netlify.app/vogin [L,R=302]
+
+# /press -> /press/ (folder pages)
+RewriteRule ^press$ /press/ [L,R=301]
+
+# Clean URLs: /about-us opens about-us.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpeg "access plus 30 days"
+ExpiresByType image/png "access plus 30 days"
+ExpiresByType image/webp "access plus 30 days"
+ExpiresByType image/svg+xml "access plus 30 days"
+ExpiresByType application/javascript "access plus 7 days"
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType application/json "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

@@ -1,0 +1,32 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  command = "echo 'No build step: static pages are prebuilt'"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Dashboard
+[[redirects]]
+  from = "/vogin"
+  to = "/vogin.html"
+  status = 200
+
+[[redirects]]
+  from = "/vogin/*"
+  to = "/vogin.html"
+  status = 200
+
+[[headers]]
+  for = "/vogin*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "same-origin"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

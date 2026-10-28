@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Press dashboard | Kenny's International</title>
+<link rel="icon" href="/assets/emblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Jost:wght@300..600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A55C;--gold-ink:#86671F;--ink:#111;--muted:#6A6A6A;--line:#E4E1DA;--bg:#F6F5F1;--card:#fff;--ok:#2F6B3B;--err:#A23B2A}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"Jost","Futura",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:15px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+.wide{font-family:"Syncopate","Michroma",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.04em}
+.cap{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+[hidden]{display:none !important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* buttons */
+.b{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:0 20px;border:1px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;transition:background .25s,color .25s,border-color .25s,opacity .25s;white-space:nowrap}
+.b:hover{background:var(--ink);color:#fff}
+.b.pri{background:var(--ink);color:#fff}
+.b.pri:hover{background:var(--gold);border-color:var(--gold);color:#000}
+.b.gold{background:var(--gold);border-color:var(--gold);color:#000}
+.b.gold:hover{background:#000;border-color:#000;color:#fff}
+.b.ghost{border-color:var(--line)}
+.b.danger{border-color:#E5C8C2;color:var(--err)}
+.b.danger:hover{background:var(--err);border-color:var(--err);color:#fff}
+.b.sm{min-height:36px;padding:0 14px;font-size:10px}
+.b:disabled{opacity:.45;cursor:default;pointer-events:none}
+.lk{background:none;border:0;padding:0;cursor:pointer;text-decoration:none;border-bottom:1px solid var(--gold);font-size:14px}
+
+/* login */
+.login{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:#000;color:#fff}
+.login .art{position:relative;background:url(/assets/hero-kennys.jpg) center 70%/cover}
+.login .art::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2),rgba(0,0,0,.85))}
+.login .pane{display:flex;flex-direction:column;justify-content:center;padding:48px clamp(28px,7vw,120px)}
+.login h1{margin:26px 0 8px;font-size:clamp(22px,2.4vw,34px);line-height:1.15}
+.login .sub{margin:0 0 40px;color:#BDBDBD;font-weight:300}
+.fl{display:block;margin:0 0 22px}
+.fl span{display:block;margin-bottom:8px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:#BDBDBD}
+.fl input{width:100%;padding:12px 0;border:0;border-bottom:1px solid #4A4A4A;background:transparent;color:#fff;font-size:17px;border-radius:0}
+.fl input:focus{outline:none;border-bottom-color:var(--gold)}
+.pwrap{position:relative}
+.pwrap button{position:absolute;right:0;bottom:8px;background:none;border:0;color:#BDBDBD;cursor:pointer;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.login .msg{min-height:22px;margin:4px 0 18px;color:#F0A898;font-size:14px}
+.login .help{margin-top:36px;font-size:13px;color:#8C8C8C;line-height:1.6}
+.login .help a{color:#BDBDBD}
+
+/* app shell */
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px;padding:0 clamp(16px,3vw,40px);background:#000;color:#fff}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.brand img{width:30px;height:30px;filter:invert(1)}
+.brand b{font-weight:500}
+.tnav{display:flex;align-items:center;gap:6px}
+.tnav a,.tnav button{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;background:none;border:0;color:#BDBDBD;cursor:pointer;text-decoration:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:color .25s}
+.tnav a:hover,.tnav button:hover,.tnav a.on{color:#fff}
+.tnav a.on{box-shadow:inset 0 -2px 0 var(--gold)}
+.who{display:flex;align-items:center;gap:10px;margin-left:10px;padding-left:16px;border-left:1px solid #2B2B2B}
+.who span{font-size:13px;color:#fff}
+.role{display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--gold);color:var(--gold);font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+main{max-width:1280px;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(16px,3vw,40px) 80px}
+.ph{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.ph h1{margin:0;font-size:clamp(22px,2.4vw,34px);line-height:1.1}
+.ph p{margin:8px 0 0;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line)}
+
+/* list */
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line)}
+.seg button{min-height:38px;padding:0 16px;border:0;background:#fff;cursor:pointer;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--muted)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:#000;color:#fff}
+.search{min-height:40px;min-width:240px;padding:0 14px;border:1px solid var(--line);background:#fff}
+.search:focus{outline:none;border-color:var(--gold-ink)}
+table{width:100%;border-collapse:collapse}
+th{padding:12px 16px;text-align:left;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--muted);border-bottom:1px solid var(--line);background:#FBFAF7}
+td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.th{width:84px;height:60px;object-fit:cover;background:#EEE;display:block}
+.th.none{display:flex;align-items:center;justify-content:center;color:#BDBDBD;font-size:10px}
+.ttl{font-weight:600;font-size:15px;line-height:1.35}
+.slug{margin-top:4px;font-size:12px;color:var(--muted);word-break:break-all}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+.pill.pub{background:#EFE6D2;color:var(--gold-ink)}
+.pill.dra{background:#EEE;color:#555}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.acts{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+.lock{font-size:12px;color:var(--muted)}
+.empty{padding:70px 20px;text-align:center;color:var(--muted)}
+.empty .wide{color:var(--ink);font-size:18px;margin-bottom:10px}
+
+/* editor */
+.eg{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.pane-main{padding:clamp(20px,3vw,36px)}
+.f{display:block;margin:0 0 24px}
+.f>span{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#4A4A4A}
+.f>span i{font-style:normal;letter-spacing:.05em;text-transform:none;font-weight:400;color:var(--muted)}
+.f input,.f select,.f textarea{width:100%;padding:11px 12px;border:1px solid var(--line);background:#fff;border-radius:0}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold-ink);box-shadow:0 0 0 1px var(--gold-ink)}
+.f textarea{resize:vertical;min-height:84px;line-height:1.55}
+.titlein{font-size:24px !important;font-weight:500;padding:14px !important}
+.tb{position:sticky;top:68px;z-index:5;display:flex;flex-wrap:wrap;gap:2px;padding:6px;background:#FBFAF7;border:1px solid var(--line);border-bottom:0}
+.tb button{min-width:36px;height:36px;padding:0 9px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;background:none;cursor:pointer;font-size:13px;color:#2A2A2A}
+.tb button:hover{background:#fff;border-color:var(--line)}
+.tb button[aria-pressed="true"]{background:#000;color:#fff}
+.tb .sep{width:1px;margin:6px 4px;background:var(--line)}
+.tb svg{width:16px;height:16px}
+.ed{min-height:420px;padding:22px 26px;border:1px solid var(--line);background:#fff;font-size:17px;line-height:1.8;color:#2A2A2A;overflow-wrap:anywhere}
+.ed:focus{outline:none;border-color:var(--gold-ink);box-shadow:0 0 0 1px var(--gold-ink)}
+.ed{position:relative}
+.ed.isempty::before{content:attr(data-ph);position:absolute;left:26px;top:22px;right:26px;color:#AAA;pointer-events:none}
+.ed p{margin:0 0 1.1em}
+.ed h2{font-family:"Syncopate",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:20px;line-height:1.35;margin:1.8em 0 .8em}
+.ed h3{font-size:19px;font-weight:600;margin:1.6em 0 .6em}
+.ed ul,.ed ol{margin:0 0 1.2em;padding-left:24px}
+.ed li{margin:0 0 .45em}
+.ed blockquote{margin:1.4em 0;padding:4px 0 4px 22px;border-left:2px solid var(--gold);font-size:20px;font-weight:300}
+.ed img{display:block;max-width:100%;height:auto;margin:1.4em 0;outline:2px solid transparent;cursor:default}
+.ed img.sel{outline-color:var(--gold)}
+.ed a{color:var(--gold-ink)}
+.ed hr{border:0;height:1px;background:var(--line);margin:2em 0}
+.side .card{padding:20px;margin-bottom:16px}
+.side h2{margin:0 0 16px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--gold-ink)}
+.stline{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.btns{display:grid;gap:8px}
+.btns .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cover{position:relative;aspect-ratio:4/3;border:1px dashed #CFCAC0;background:#FBFAF7;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;overflow:hidden;transition:border-color .25s}
+.cover:hover,.cover.drag{border-color:var(--gold-ink)}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover p{margin:0;padding:16px;color:var(--muted);font-size:13px;line-height:1.5}
+.cover .busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.8);font-size:13px}
+.slugpre{display:flex;border:1px solid var(--line);background:#fff}
+.slugpre span{display:flex;align-items:center;padding:0 0 0 12px;color:var(--muted);font-size:14px;white-space:nowrap}
+.slugpre input{border:0 !important;padding-left:2px !important;box-shadow:none !important}
+.slugpre:focus-within{border-color:var(--gold-ink);box-shadow:0 0 0 1px var(--gold-ink)}
+.meta{margin:0;font-size:13px;color:var(--muted);line-height:1.8}
+.meta b{color:var(--ink);font-weight:500}
+.dirty{font-size:12px;color:var(--gold-ink)}
+.ro{padding:12px 14px;margin-bottom:18px;background:#F3EEE2;border-left:2px solid var(--gold);font-size:14px}
+
+/* account */
+.acc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.acc .card{padding:clamp(20px,3vw,36px)}
+.acc h2{margin:0 0 20px;font-size:16px}
+.rules{margin:0 0 20px;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.7}
+
+/* modal + toast */
+.mb{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55)}
+.md{width:min(480px,100%);background:#fff;padding:28px;border-top:2px solid var(--gold)}
+.md h3{margin:0 0 10px;font-size:16px}
+.md p{margin:0 0 20px;color:var(--muted);line-height:1.6}
+.md .row{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+.toasts{position:fixed;right:20px;bottom:20px;z-index:95;display:grid;gap:8px}
+.toast{min-width:260px;max-width:420px;padding:14px 18px;background:#000;color:#fff;border-left:3px solid var(--gold);font-size:14px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.2);animation:tin .3s ease}
+.toast.err{border-left-color:#E0705C}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.loading{padding:60px;text-align:center;color:var(--muted)}
+
+@media (max-width:1000px){
+  .eg,.acc{grid-template-columns:minmax(0,1fr)}
+  .login{grid-template-columns:minmax(0,1fr)}
+  .login .art{display:none}
+  .col-author,.col-cat{display:none}
+}
+@media (max-width:700px){
+  .top{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+  .who span{display:none}
+  .tnav a,.tnav button{padding:0 8px}
+  .col-date,.col-thumb{display:none}
+  td,th{padding:12px 10px}
+  .search{min-width:0;width:100%}
+  .tb{top:0}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section class="login" id="v-login" hidden>
+  <div class="art" aria-hidden="true"></div>
+  <div class="pane">
+    <img src="/assets/emblem.png" alt="" width="46" height="46" style="filter: invert(1)">
+    <h1 class="wide">Press dashboard</h1>
+    <p class="sub">Kenny's International. Sign in to write and publish articles.</p>
+    <form id="f-login" novalidate>
+      <label class="fl"><span>Email</span><input name="email" type="email" autocomplete="username" required></label>
+      <label class="fl"><span>Password</span><span class="pwrap"><input name="password" type="password" autocomplete="current-password" required><button type="button" data-showpw>Show</button></span></label>
+      <p class="msg" id="login-msg" role="alert"></p>
+      <button class="b gold" type="submit" id="login-btn" style="width: 100%">Sign in</button>
+    </form>
+    <p class="help">Forgot your password? Ask the super-admin at <a href="mailto:refdigital@kennysinternational.com">refdigital@kennysinternational.com</a>.</p>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="v-app" hidden>
+  <header class="top">
+    <a class="brand" href="#/articles"><img src="/assets/emblem.png" alt=""><span class="cap"><b>Kenny's International</b> · Press</span></a>
+    <nav class="tnav" aria-label="Dashboard">
+      <a href="#/articles" data-nav="articles">Articles</a>
+      <a href="#/new" data-nav="new">New article</a>
+      <a href="#/account" data-nav="account">Account</a>
+      <a href="/press" target="_blank" rel="noopener">View site</a>
+      <span class="who"><span id="who-name"></span><span class="role" id="who-role"></span></span>
+      <button type="button" id="logout">Sign out</button>
+    </nav>
+  </header>
+  <main id="view" tabindex="-1"></main>
+</div>
+
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+<input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
+
+<script>
+(function(){
+"use strict";
+var S = { user: null, items: [], categories: [], filter: { who: "all", status: "all", q: "" }, dirty: false };
+var $ = function(s, r){ return (r||document).querySelector(s); };
+var $$ = function(s, r){ return [].slice.call((r||document).querySelectorAll(s)); };
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]}); }
+var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function fdate(s){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||""); return m ? (+m[3])+" "+MONTHS[+m[2]-1].slice(0,3)+" "+m[1] : ""; }
+function ftime(s){ if(!s) return ""; var d=new Date(s); return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})+", "+d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}); }
+function today(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function slugify(s){ return String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/['\u2019]/g,"").toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,90); }
+
+function toast(msg, err){ var t=document.createElement("div"); t.className="toast"+(err?" err":""); t.textContent=msg; $("#toasts").appendChild(t); setTimeout(function(){ t.remove(); }, err?6500:3500); }
+
+function api(method, path, body, raw){
+  var opt={ method: method, headers: { "X-KP": "1" }, credentials: "same-origin" };
+  if(raw){ opt.body=raw.body; opt.headers["Content-Type"]=raw.type; }
+  else if(body!==undefined){ opt.body=JSON.stringify(body); opt.headers["Content-Type"]="application/json"; }
+  return fetch(path, opt).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(j){
+      if(r.status===401 && path.indexOf("/api/auth/login")<0){ S.user=null; S.dirty=false; showLogin("Your session has ended. Please sign in again."); throw new Error("signed-out"); }
+      if(!r.ok){ var e=new Error(j.error||("Something went wrong ("+r.status+").")); e.status=r.status; throw e; }
+      return j;
+    });
+  });
+}
+
+/* ---------------- modal ---------------- */
+function modal(opts){
+  return new Promise(function(resolve){
+    var b=document.createElement("div"); b.className="mb";
+    var fields=(opts.fields||[]).map(function(f,i){ return '<label class="f"><span>'+esc(f.label)+'</span><input data-i="'+i+'" type="'+(f.type||"text")+'" value="'+esc(f.value||"")+'" placeholder="'+esc(f.ph||"")+'"></label>'; }).join("");
+    b.innerHTML='<div class="md" role="dialog" aria-modal="true" aria-labelledby="md-t"><h3 class="wide" id="md-t">'+esc(opts.title)+'</h3>'+(opts.text?'<p>'+esc(opts.text)+'</p>':'')+fields+'<div class="row"><button class="b ghost" data-x>Cancel</button><button class="b '+(opts.danger?"danger":"pri")+'" data-ok>'+esc(opts.ok||"OK")+'</button></div></div>';
+    document.body.appendChild(b);
+    var prev=document.activeElement;
+    function done(v){ b.remove(); document.removeEventListener("keydown",key); if(prev&&prev.focus) prev.focus(); resolve(v); }
+    function key(e){ if(e.key==="Escape") done(null); if(e.key==="Enter"&&e.target.tagName==="INPUT"){ e.preventDefault(); ok(); } }
+    function ok(){ done(opts.fields ? $$("input",b).map(function(x){return x.value;}) : true); }
+    document.addEventListener("keydown",key);
+    $("[data-x]",b).onclick=function(){ done(null); };
+    $("[data-ok]",b).onclick=ok;
+    b.addEventListener("mousedown",function(e){ if(e.target===b) done(null); });
+    var first=$("input",b)||$("[data-ok]",b); setTimeout(function(){ first.focus(); if(first.select) first.select(); },10);
+  });
+}
+
+/* ---------------- login ---------------- */
+function showLogin(msg){
+  $("#v-app").hidden=true; $("#v-login").hidden=false;
+  $("#login-msg").textContent=msg||"";
+  setTimeout(function(){ $("#f-login [name=email]").focus(); },10);
+}
+$("[data-showpw]").onclick=function(){ var i=$("#f-login [name=password]"); var show=i.type==="password"; i.type=show?"text":"password"; this.textContent=show?"Hide":"Show"; };
+$("#f-login").addEventListener("submit",function(e){
+  e.preventDefault();
+  var email=this.email.value.trim(), pw=this.password.value;
+  if(!email||!pw){ $("#login-msg").textContent="Please enter your email and password."; return; }
+  var btn=$("#login-btn"); btn.disabled=true; btn.textContent="Signing in…";
+  api("POST","/api/auth/login",{email:email,password:pw}).then(function(j){
+    S.user=j.user; $("#f-login").reset(); startApp();
+  }).catch(function(err){ $("#login-msg").textContent=err.message; }).then(function(){ btn.disabled=false; btn.textContent="Sign in"; });
+});
+$("#logout").onclick=function(){
+  if(S.dirty && !confirm("You have unsaved changes. Sign out anyway?")) return;
+  S.dirty=false;
+  api("POST","/api/auth/logout",{}).catch(function(){}).then(function(){ S.user=null; location.hash=""; showLogin("You are signed out."); });
+};
+
+function startApp(){
+  $("#v-login").hidden=true; $("#v-app").hidden=false;
+  $("#who-name").textContent=S.user.name;
+  $("#who-role").textContent=S.user.role==="super"?"Super-admin":"Admin";
+  if(!location.hash||location.hash==="#") location.hash="#/articles"; else route();
+}
+
+/* ---------------- routing ---------------- */
+var lastHash=location.hash;
+window.addEventListener("hashchange",function(){
+  if(S.dirty && !confirm("You have unsaved changes. Leave this page?")){ history.replaceState(null,"",lastHash); return; }
+  S.dirty=false; route();
+});
+window.addEventListener("beforeunload",function(e){ if(S.dirty){ e.preventDefault(); e.returnValue=""; } });
+function route(){
+  lastHash=location.hash;
+  if(!S.user) return;
+  var h=location.hash.replace(/^#\/?/,""), parts=h.split("/");
+  $$("[data-nav]").forEach(function(a){ a.classList.toggle("on", a.getAttribute("data-nav")===(parts[0]||"articles")); });
+  var v=$("#view");
+  if(parts[0]==="new") return editor(null);
+  if(parts[0]==="edit"&&parts[1]) return editor(parts[1]);
+  if(parts[0]==="account") return account();
+  return list();
+}
+
+/* ---------------- article list ---------------- */
+function list(){
+  var v=$("#view");
+  v.innerHTML='<div class="ph"><div><h1 class="wide">Articles</h1><p id="count">Loading…</p></div><a class="b pri" href="#/new">New article</a></div><div class="card"><div class="bar"><div style="display:flex;gap:10px;flex-wrap:wrap"><div class="seg" role="group" aria-label="Author"><button data-who="all">All</button><button data-who="mine">Mine</button></div><div class="seg" role="group" aria-label="Status"><button data-st="all">Any status</button><button data-st="published">Published</button><button data-st="draft">Drafts</button></div></div><input class="search" type="search" placeholder="Search titles" aria-label="Search titles"></div><div id="rows"><div class="loading">Loading articles…</div></div></div>';
+  $$("[data-who]",v).forEach(function(b){ b.onclick=function(){ S.filter.who=b.getAttribute("data-who"); draw(); }; });
+  $$("[data-st]",v).forEach(function(b){ b.onclick=function(){ S.filter.status=b.getAttribute("data-st"); draw(); }; });
+  var s=$(".search",v); s.value=S.filter.q; s.oninput=function(){ S.filter.q=s.value; draw(); };
+  api("GET","/api/admin/articles").then(function(j){ S.items=j.items; S.categories=j.categories; draw(); }).catch(function(e){ if(e.message!=="signed-out") $("#rows").innerHTML='<div class="empty">'+esc(e.message)+'</div>'; });
+}
+function draw(){
+  var v=$("#view"); if(!$("#rows",v)) return;
+  $$("[data-who]",v).forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-who")===S.filter.who); });
+  $$("[data-st]",v).forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-st")===S.filter.status); });
+  var q=S.filter.q.trim().toLowerCase();
+  var rows=S.items.filter(function(a){
+    return (S.filter.who==="all"||a.author===S.user.email) && (S.filter.status==="all"||a.status===S.filter.status) && (!q||a.title.toLowerCase().indexOf(q)>=0);
+  });
+  var mine=S.items.filter(function(a){return a.author===S.user.email;}).length;
+  $("#count").textContent=S.items.length+" article"+(S.items.length===1?"":"s")+" · "+mine+" by you"+(S.user.role==="super"?" · you can edit all articles":" · you can edit your own articles");
+  if(!rows.length){ $("#rows").innerHTML='<div class="empty"><p class="wide">'+(S.items.length?"No matching articles":"No articles yet")+'</p><p>'+(S.items.length?"Try another filter.":"Write the first one.")+'</p>'+(S.items.length?"":'<a class="b pri" href="#/new" style="margin-top:14px">New article</a>')+'</div>'; return; }
+  $("#rows").innerHTML='<table><thead><tr><th class="col-thumb"><span class="sr">Cover</span></th><th>Title</th><th class="col-cat">Category</th><th class="col-date">Date</th><th>Status</th><th class="col-author">Author</th><th style="text-align:right">Actions</th></tr></thead><tbody>'+rows.map(function(a){
+    var img=a.cover&&a.cover.url?'<img class="th" src="'+esc(a.cover.url)+'" alt="">':'<span class="th none">No photo</span>';
+    var view=a.status==="published"?'<a class="b sm ghost" href="/press/'+esc(a.slug)+'" target="_blank" rel="noopener">View</a>':'<a class="b sm ghost" href="/press/'+esc(a.slug)+'?preview=1" target="_blank" rel="noopener">Preview</a>';
+    var acts=a.canEdit?'<a class="b sm" href="#/edit/'+esc(a.id)+'">Edit</a>'+view+'<button class="b sm danger" data-del="'+esc(a.id)+'">Delete</button>':view+'<span class="lock" title="Only the author or the super-admin can change this article">View only</span>';
+    return '<tr><td class="col-thumb">'+img+'</td><td><div class="ttl">'+esc(a.title)+'</div><div class="slug">/press/'+esc(a.slug)+'</div></td><td class="col-cat">'+esc(a.category)+'</td><td class="col-date">'+fdate(a.date)+'</td><td><span class="pill '+(a.status==="published"?"pub":"dra")+'">'+(a.status==="published"?"Published":"Draft")+'</span></td><td class="col-author">'+esc(a.authorName||a.author)+(a.author===S.user.email?" (you)":"")+'</td><td><div class="acts">'+acts+'</div></td></tr>';
+  }).join("")+'</tbody></table>';
+  $$("[data-del]").forEach(function(b){ b.onclick=function(){ del(b.getAttribute("data-del")); }; });
+}
+function del(id, after){
+  var a=S.items.filter(function(x){return x.id===id;})[0];
+  modal({ title:"Delete article?", text:'"'+(a?a.title:"This article")+'" will be removed from the website. This cannot be undone.', ok:"Delete", danger:true }).then(function(ok){
+    if(!ok) return;
+    api("DELETE","/api/admin/articles/"+id).then(function(){ toast("Article deleted."); S.dirty=false; if(after) after(); else list(); }).catch(function(e){ if(e.message!=="signed-out") toast(e.message,true); });
+  });
+}
+
+/* ---------------- image upload ---------------- */
+function prepareImage(file){
+  return new Promise(function(resolve, reject){
+    if(!/^image\/(jpeg|png|webp)$/.test(file.type)) return reject(new Error("Please choose a JPEG, PNG or WebP photo."));
+    if(file.type!=="image/png" && file.size<1.5*1024*1024) return resolve(file);
+    var img=new Image(), url=URL.createObjectURL(file);
+    img.onload=function(){
+      var max=2400, w=img.naturalWidth, h=img.naturalHeight, r=Math.min(1, max/Math.max(w,h));
+      if(file.type==="image/png" && r===1 && file.size<2*1024*1024){ URL.revokeObjectURL(url); return resolve(file); }
+      var c=document.createElement("canvas"); c.width=Math.round(w*r); c.height=Math.round(h*r);
+      var ctx=c.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(function(b){ b?resolve(b):reject(new Error("This photo could not be processed.")); },"image/jpeg",0.86);
+    };
+    img.onerror=function(){ URL.revokeObjectURL(url); reject(new Error("This photo could not be read.")); };
+    img.src=url;
+  });
+}
+function upload(file){
+  return prepareImage(file).then(function(blob){
+    if(blob.size>4*1024*1024) throw new Error("This photo is too large even after resizing (max 4 MB).");
+    return api("POST","/api/admin/upload",undefined,{ body: blob, type: blob.type||"image/jpeg" });
+  }).then(function(j){ return j.url; });
+}
+function pickFile(){
+  return new Promise(function(resolve){
+    var f=$("#file"); f.value="";
+    f.onchange=function(){ resolve(f.files[0]||null); };
+    f.click();
+  });
+}
+
+/* ---------------- paste cleaning (mirrors the server rules) ---------------- */
+var KEEP={P:"p",H2:"h2",H3:"h3",STRONG:"strong",B:"strong",EM:"em",I:"em",U:"u",A:"a",UL:"ul",OL:"ol",LI:"li",BLOCKQUOTE:"blockquote",BR:"br",HR:"hr",IMG:"img",FIGURE:"figure",FIGCAPTION:"figcaption",H1:"h2",H4:"h3",H5:"h3",H6:"h3",DIV:"p"};
+function cleanNode(node, out){
+  [].slice.call(node.childNodes).forEach(function(n){
+    if(n.nodeType===3){ out.appendChild(document.createTextNode(n.nodeValue)); return; }
+    if(n.nodeType!==1) return;
+    var tag=KEEP[n.tagName];
+    if(/^(SCRIPT|STYLE|META|LINK|TITLE|IFRAME|OBJECT|SVG|NOSCRIPT)$/.test(n.tagName)) return;
+    if(!tag){ cleanNode(n,out); return; }
+    if(tag==="img"){ var src=n.getAttribute("src")||""; if(/^\/media\//.test(src)){ var i=document.createElement("img"); i.src=src; i.alt=n.getAttribute("alt")||""; out.appendChild(i); } return; }
+    var el=document.createElement(tag);
+    if(tag==="a"){ var href=n.getAttribute("href")||""; if(/^(https?:|mailto:|tel:)/i.test(href)) el.setAttribute("href",href); else { cleanNode(n,out); return; } }
+    cleanNode(n,el); out.appendChild(el);
+  });
+  return out;
+}
+function cleanHTML(html){
+  var t=document.createElement("template"); t.innerHTML=html;
+  var d=document.createElement("div"); cleanNode(t.content,d);
+  wrapInline(d);
+  $$("p",d).forEach(function(p){ if(!p.textContent.trim() && !$("img",p)) p.remove(); });
+  return d.innerHTML;
+}
+// Loose text or inline tags at the top level go into paragraphs.
+function wrapInline(d){
+  var BLOCK=/^(P|H2|H3|UL|OL|BLOCKQUOTE|HR|FIGURE|IMG)$/, run=null;
+  [].slice.call(d.childNodes).forEach(function(n){
+    if(n.nodeType===1 && BLOCK.test(n.tagName)){ run=null; return; }
+    if(!run && ((n.nodeType===3 && !n.nodeValue.trim()) || (n.nodeType===1 && n.tagName==="BR"))){ n.remove(); return; }
+    if(n.nodeType===1 && n.tagName==="BR" && run){ run=null; n.remove(); return; }
+    if(!run){ run=document.createElement("p"); d.insertBefore(run,n); }
+    run.appendChild(n);
+  });
+}
+function textToHTML(t){ return t.replace(/\r/g,"").split(/\n{2,}/).map(function(p){ p=p.trim(); return p?"<p>"+esc(p).replace(/\n/g,"<br>")+"</p>":""; }).join(""); }
+
+/* ---------------- editor ---------------- */
+var ICON={
+  b:'<b>B</b>', i:'<i>I</i>',
+  ul:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 4h8M6 8h8M6 12h8"/><circle cx="2.5" cy="4" r="1" fill="currentColor"/><circle cx="2.5" cy="8" r="1" fill="currentColor"/><circle cx="2.5" cy="12" r="1" fill="currentColor"/></svg>',
+  ol:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 4h8M6 8h8M6 12h8"/><text x="0" y="5.5" font-size="5" fill="currentColor" stroke="none">1</text><text x="0" y="9.5" font-size="5" fill="currentColor" stroke="none">2</text><text x="0" y="13.5" font-size="5" fill="currentColor" stroke="none">3</text></svg>',
+  q:'<svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 9c0-3 1.5-5 4-5.5v1.6C4.8 5.6 4.2 6.6 4.1 8H6v4H2zm7 0c0-3 1.5-5 4-5.5v1.6c-1.2.5-1.8 1.5-1.9 2.9H13v4H9z"/></svg>',
+  link:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 9a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2l-.7.7M9 7a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2l.7-.7"/></svg>',
+  img:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.5" y="2.5" width="13" height="11"/><circle cx="5.5" cy="6" r="1.3"/><path d="M1.5 12l4-4 3 3 2-2 4 4"/></svg>',
+  hr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 8h14"/></svg>',
+  undo:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 3L2 6l3 3M2 6h7a4 4 0 0 1 0 8H6"/></svg>',
+  redo:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M11 3l3 3-3 3M14 6H7a4 4 0 0 0 0 8h3"/></svg>',
+  clr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 3h9M7.5 3L5 13M10 9l4 4M14 9l-4 4"/></svg>'
+};
+function editor(id){
+  var v=$("#view");
+  v.innerHTML='<div class="loading">Loading…</div>';
+  var load = id ? api("GET","/api/admin/articles/"+id).then(function(j){ return j.article; }) : Promise.resolve(null);
+  var cats = S.categories.length ? Promise.resolve(S.categories) : api("GET","/api/admin/articles").then(function(j){ S.items=j.items; S.categories=j.categories; return j.categories; });
+  Promise.all([load,cats]).then(function(r){ renderEditor(r[0], r[1]); }).catch(function(e){ if(e.message!=="signed-out"){ v.innerHTML='<div class="empty"><p class="wide">Could not open this article</p><p>'+esc(e.message)+'</p><a class="b" href="#/articles">Back to articles</a></div>'; } });
+}
+function renderEditor(a, cats){
+  var isNew=!a;
+  a = a || { title:"", slug:"", excerpt:"", body:"", category:cats[0], date:today(), status:"draft", cover:{url:"",alt:""}, canEdit:true };
+  var ro=!a.canEdit, slugTouched=!isNew;
+  var v=$("#view");
+  v.innerHTML=
+  '<div class="ph"><div><a class="lk" href="#/articles">← All articles</a><h1 class="wide" style="margin-top:16px">'+(isNew?"New article":"Edit article")+'</h1></div><span class="dirty" id="dirty" aria-live="polite"></span></div>'+
+  (ro?'<div class="ro">This article was written by '+esc(a.authorName||a.author)+'. Only the author or the super-admin can change it.</div>':'')+
+  '<div class="eg"><div class="card pane-main">'+
+    '<label class="f"><span>Title</span><input class="titlein" id="e-title" maxlength="160" value="'+esc(a.title)+'" placeholder="Article title"></label>'+
+    '<label class="f"><span>Summary <i><b id="ex-n">0</b>/320 · shown on the Press page and when shared</i></span><textarea id="e-ex" maxlength="320" rows="3" placeholder="One or two sentences that introduce the article">'+esc(a.excerpt)+'</textarea></label>'+
+    '<div class="f" style="margin:0"><span>Article</span>'+
+      '<div class="tb" role="toolbar" aria-label="Formatting">'+
+        '<button type="button" data-fmt="p" title="Paragraph">Text</button><button type="button" data-fmt="h2" title="Heading">H2</button><button type="button" data-fmt="h3" title="Subheading">H3</button><span class="sep"></span>'+
+        '<button type="button" data-cmd="bold" title="Bold (Ctrl+B)">'+ICON.b+'</button><button type="button" data-cmd="italic" title="Italic (Ctrl+I)">'+ICON.i+'</button><button type="button" data-act="link" title="Link">'+ICON.link+'</button><span class="sep"></span>'+
+        '<button type="button" data-cmd="insertUnorderedList" title="Bulleted list">'+ICON.ul+'</button><button type="button" data-cmd="insertOrderedList" title="Numbered list">'+ICON.ol+'</button><button type="button" data-fmt="blockquote" title="Quote">'+ICON.q+'</button><button type="button" data-cmd="insertHorizontalRule" title="Divider">'+ICON.hr+'</button><span class="sep"></span>'+
+        '<button type="button" data-act="img" title="Insert photo">'+ICON.img+' Photo</button><span class="sep"></span>'+
+        '<button type="button" data-cmd="removeFormat" title="Clear formatting">'+ICON.clr+'</button><button type="button" data-cmd="undo" title="Undo">'+ICON.undo+'</button><button type="button" data-cmd="redo" title="Redo">'+ICON.redo+'</button>'+
+      '</div>'+
+      '<div class="ed" id="e-body" contenteditable="'+(!ro)+'" role="textbox" aria-multiline="true" aria-label="Article text" data-ph="Write the article here. Use H2 for section titles, and Photo to add pictures."></div>'+
+    '</div>'+
+  '</div>'+
+  '<aside class="side">'+
+    '<div class="card"><h2>Publishing</h2>'+
+      '<div class="stline"><span class="pill '+(a.status==="published"?"pub":"dra")+'" id="e-pill">'+(a.status==="published"?"Published":"Draft")+'</span>'+(isNew?'':'<a class="lk" id="e-view" target="_blank" rel="noopener" href="/press/'+esc(a.slug)+(a.status==="published"?"":"?preview=1")+'">'+(a.status==="published"?"View":"Preview")+'</a>')+'</div>'+
+      '<label class="f"><span>Date</span><input type="date" id="e-date" value="'+esc(a.date)+'"></label>'+
+      '<label class="f"><span>Category</span><select id="e-cat">'+cats.map(function(c){ return '<option'+(c===a.category?" selected":"")+'>'+esc(c)+'</option>'; }).join("")+'</select></label>'+
+      (ro?'':'<div class="btns">'+
+        (a.status==="published"
+          ? '<button class="b pri" type="button" data-save="published">Update</button><div class="row"><button class="b" type="button" data-preview>Preview</button><button class="b" type="button" data-save="draft">Unpublish</button></div>'
+          : '<button class="b gold" type="button" data-save="published">Publish</button><div class="row"><button class="b" type="button" data-save="draft">Save draft</button><button class="b" type="button" data-preview>Preview</button></div>')+
+        (isNew?'':'<button class="b danger" type="button" data-delete style="margin-top:8px">Delete article</button>')+
+      '</div>')+
+    '</div>'+
+    '<div class="card"><h2>Cover photo</h2>'+
+      '<div class="cover" id="e-cover" tabindex="0" role="button" aria-label="Choose a cover photo">'+(a.cover&&a.cover.url?'<img src="'+esc(a.cover.url)+'" alt="">':'<p>Click or drop a photo here<br>JPEG, PNG or WebP. Large photos are resized automatically.</p>')+'</div>'+
+      '<label class="f" style="margin:16px 0 0"><span>Photo description <i>for accessibility</i></span><input id="e-alt" maxlength="200" value="'+esc(a.cover&&a.cover.alt)+'" placeholder="e.g. A Piaget watch on display"></label>'+
+      (ro?'':'<button class="lk" type="button" id="e-rmcover" style="margin-top:12px'+(a.cover&&a.cover.url?'':';display:none')+'">Remove photo</button>')+
+    '</div>'+
+    '<div class="card"><h2>Web address</h2><div class="slugpre"><span>/press/</span><input id="e-slug" maxlength="90" value="'+esc(a.slug)+'" aria-label="Web address"></div></div>'+
+    (isNew?'':'<div class="card"><h2>Details</h2><p class="meta">Author: <b>'+esc(a.authorName||a.author)+'</b><br>Created: '+ftime(a.createdAt)+'<br>Last saved: <span id="e-saved">'+ftime(a.updatedAt)+'</span>'+(a.updatedBy&&a.updatedBy!==a.author?' by '+esc(a.updatedBy):'')+'</p></div>')+
+  '</aside></div>';
+
+  var ed=$("#e-body"); ed.innerHTML=a.body||"<p><br></p>";
+  function phCheck(){ ed.classList.toggle("isempty", !ed.textContent.trim() && !$("img",ed)); }
+  phCheck(); ed.addEventListener("input",phCheck);
+  var cover={url:(a.cover&&a.cover.url)||"", alt:(a.cover&&a.cover.alt)||""};
+  try{ document.execCommand("defaultParagraphSeparator",false,"p"); }catch(e){}
+  function mark(){ if(ro) return; S.dirty=true; $("#dirty").textContent="Unsaved changes"; }
+  function countEx(){ $("#ex-n").textContent=$("#e-ex").value.length; }
+  countEx();
+  if(ro){ $$("input,select,textarea",v).forEach(function(x){ x.disabled=true; }); $$(".tb button",v).forEach(function(x){ x.disabled=true; }); }
+  $("#e-title").addEventListener("input",function(){ if(!slugTouched) $("#e-slug").value=slugify(this.value); mark(); });
+  $("#e-slug").addEventListener("input",function(){ slugTouched=true; mark(); });
+  $("#e-slug").addEventListener("blur",function(){ this.value=slugify(this.value)||slugify($("#e-title").value); });
+  $("#e-ex").addEventListener("input",function(){ countEx(); mark(); });
+  ["#e-date","#e-cat","#e-alt"].forEach(function(s){ $(s).addEventListener("input",mark); });
+  ed.addEventListener("input",mark);
+
+  // toolbar
+  function exec(c,val){ ed.focus(); document.execCommand(c,false,val||null); mark(); state(); }
+  $$("[data-cmd]",v).forEach(function(b){ b.addEventListener("mousedown",function(e){ e.preventDefault(); }); b.onclick=function(){ exec(b.getAttribute("data-cmd")); }; });
+  $$("[data-fmt]",v).forEach(function(b){ b.addEventListener("mousedown",function(e){ e.preventDefault(); }); b.onclick=function(){
+    var f=b.getAttribute("data-fmt"), cur=(document.queryCommandValue("formatBlock")||"").toLowerCase();
+    exec("formatBlock", "<"+(cur===f && f!=="p" ? "p" : f)+">");
+  }; });
+  function state(){
+    var bl=(document.queryCommandValue("formatBlock")||"").toLowerCase();
+    $$("[data-fmt]",v).forEach(function(b){ b.setAttribute("aria-pressed", bl===b.getAttribute("data-fmt")); });
+    ["bold","italic","insertUnorderedList","insertOrderedList"].forEach(function(c){ var b=$('[data-cmd="'+c+'"]',v); if(b) b.setAttribute("aria-pressed", document.queryCommandState(c)); });
+  }
+  document.addEventListener("selectionchange",function(){ if(document.activeElement===ed) state(); });
+  var saved=null;
+  function keepSel(){ var s=getSelection(); if(s.rangeCount && ed.contains(s.anchorNode)) saved=s.getRangeAt(0).cloneRange(); }
+  function restoreSel(){ ed.focus(); if(saved){ var s=getSelection(); s.removeAllRanges(); s.addRange(saved); } }
+  $('[data-act="link"]',v).addEventListener("mousedown",function(e){ e.preventDefault(); keepSel(); });
+  $('[data-act="link"]',v).onclick=function(){
+    var txt=String(getSelection());
+    modal({ title:"Add a link", text: txt?"":"Select some text first if you want to link existing words.", fields:[{label:"Web address", value:"https://", type:"url"}], ok:"Add link" }).then(function(r){
+      if(!r) return; var url=r[0].trim(); if(!/^(https?:\/\/|mailto:|tel:)/i.test(url)){ toast("Links must start with https://, mailto: or tel:", true); return; }
+      restoreSel();
+      if(String(getSelection())) exec("createLink", url); else exec("insertHTML", '<a href="'+esc(url)+'">'+esc(url)+'</a>');
+    });
+  };
+  $('[data-act="img"]',v).addEventListener("mousedown",function(e){ e.preventDefault(); keepSel(); });
+  $('[data-act="img"]',v).onclick=function(){
+    pickFile().then(function(file){
+      if(!file) return;
+      return modal({ title:"Describe the photo", text:"A short description helps visually impaired readers and search engines.", fields:[{label:"Photo description", ph:"e.g. Guests at the Piaget evening"}], ok:"Insert photo" }).then(function(r){
+        if(r===null) return;
+        toast("Uploading photo…");
+        return upload(file).then(function(url){ restoreSel(); exec("insertHTML", '<img src="'+esc(url)+'" alt="'+esc(r[0]||"")+'"><p><br></p>'); toast("Photo added."); });
+      });
+    }).catch(function(e){ if(e.message!=="signed-out") toast(e.message,true); });
+  };
+  ed.addEventListener("click",function(e){ $$("img.sel",ed).forEach(function(i){ i.classList.remove("sel"); }); if(e.target.tagName==="IMG") e.target.classList.add("sel"); });
+  ed.addEventListener("keydown",function(e){ var sel=$("img.sel",ed); if(sel && (e.key==="Delete"||e.key==="Backspace")){ e.preventDefault(); sel.remove(); mark(); } });
+  ed.addEventListener("paste",function(e){
+    e.preventDefault();
+    var cd=e.clipboardData, html=cd.getData("text/html"), txt=cd.getData("text/plain");
+    document.execCommand("insertHTML",false, html?cleanHTML(html):textToHTML(txt));
+    mark();
+  });
+  ed.addEventListener("drop",function(e){ if(e.dataTransfer && e.dataTransfer.files.length){ e.preventDefault(); toast("Use the Photo button to add photos to the article."); } });
+
+  // cover
+  var box=$("#e-cover");
+  function setCover(url){ cover.url=url; box.innerHTML=url?'<img src="'+esc(url)+'" alt="">':'<p>Click or drop a photo here<br>JPEG, PNG or WebP. Large photos are resized automatically.</p>'; var rm=$("#e-rmcover"); if(rm) rm.style.display=url?"":"none"; mark(); }
+  function coverFile(file){
+    if(!file||ro) return;
+    var busy=document.createElement("div"); busy.className="busy"; busy.textContent="Uploading…"; box.appendChild(busy);
+    upload(file).then(function(url){ setCover(url); if(!$("#e-alt").value) $("#e-alt").focus(); }).catch(function(e){ busy.remove(); if(e.message!=="signed-out") toast(e.message,true); });
+  }
+  if(!ro){
+    box.onclick=function(){ pickFile().then(coverFile); };
+    box.onkeydown=function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pickFile().then(coverFile); } };
+    box.ondragover=function(e){ e.preventDefault(); box.classList.add("drag"); };
+    box.ondragleave=function(){ box.classList.remove("drag"); };
+    box.ondrop=function(e){ e.preventDefault(); box.classList.remove("drag"); coverFile(e.dataTransfer.files[0]); };
+    $("#e-rmcover").onclick=function(){ setCover(""); };
+  }
+
+  // save
+  function payload(status){
+    $$("img.sel",ed).forEach(function(i){ i.classList.remove("sel"); });
+    return { title:$("#e-title").value, slug:$("#e-slug").value, excerpt:$("#e-ex").value, body:cleanHTML(ed.innerHTML), category:$("#e-cat").value, date:$("#e-date").value, status:status, cover:{url:cover.url, alt:$("#e-alt").value}, updatedAt:a.updatedAt };
+  }
+  var busy=false;
+  function save(status, then){
+    if(busy) return; busy=true;
+    $$("[data-save],[data-preview]",v).forEach(function(b){ b.disabled=true; });
+    var p = isNew ? api("POST","/api/admin/articles",payload(status)) : api("PUT","/api/admin/articles/"+a.id,payload(status));
+    p.then(function(j){
+      S.dirty=false; busy=false;
+      var was=a.status; a=j.article;
+      toast(status==="published" ? (was==="published"?"Article updated on the website.":"Article published.") : (was==="published"?"Article unpublished. It is now a draft.":"Draft saved."));
+      if(then) then(a);
+      if(isNew){ lastHash="#/edit/"+a.id; history.replaceState(null,"","#/edit/"+a.id); }
+      renderEditor(a, cats);
+    }).catch(function(e){
+      busy=false; $$("[data-save],[data-preview]",v).forEach(function(b){ b.disabled=false; });
+      if(e.message!=="signed-out") toast(e.message,true);
+    });
+  }
+  $$("[data-save]",v).forEach(function(b){ b.onclick=function(){
+    var st=b.getAttribute("data-save");
+    if(st==="draft" && a.status==="published"){
+      modal({ title:"Unpublish?", text:"The article will be removed from the website and kept as a draft.", ok:"Unpublish", danger:true }).then(function(ok){ if(ok) save("draft"); });
+    } else save(st);
+  }; });
+  var pv=$("[data-preview]",v);
+  if(pv) pv.onclick=function(){
+    var w=window.open("about:blank","_blank");
+    var go=function(art){ if(w) w.location="/press/"+encodeURIComponent(art.slug)+"?preview=1"; };
+    if(S.dirty||isNew) save(a.status==="published"?"published":"draft", go);
+    else go(a);
+  };
+  var dl=$("[data-delete]",v);
+  if(dl) dl.onclick=function(){ S.items=[{id:a.id,title:a.title}]; del(a.id, function(){ location.hash="#/articles"; }); };
+  v.onkeydown=function(e){ if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="s"){ e.preventDefault(); if(!ro) save(a.status==="published"?"published":"draft"); } };
+  if(isNew) $("#e-title").focus();
+}
+
+/* ---------------- account ---------------- */
+function account(){
+  var v=$("#view");
+  v.innerHTML='<div class="ph"><div><h1 class="wide">Account</h1><p>'+esc(S.user.email)+'</p></div></div>'+
+  '<div class="acc"><div class="card"><h2 class="wide">Change password</h2>'+
+    '<ul class="rules"><li>At least 10 characters</li><li>At least one letter and one number</li><li>You will be signed out and must sign in with the new password</li></ul>'+
+    '<form id="f-pw" novalidate><label class="f"><span>Current password</span><input type="password" name="current" autocomplete="current-password" required></label>'+
+    '<label class="f"><span>New password</span><input type="password" name="next" autocomplete="new-password" required minlength="10"></label>'+
+    '<label class="f"><span>Repeat new password</span><input type="password" name="again" autocomplete="new-password" required></label>'+
+    '<button class="b pri" type="submit">Change password</button></form></div>'+
+  '<div class="card"><h2 class="wide">Your role</h2><p class="meta" style="font-size:15px;line-height:1.8"><b>'+(S.user.role==="super"?"Super-admin":"Admin")+'</b><br>'+(S.user.role==="super"?"You can create, edit and delete all articles.":"You can create articles, and edit or delete the articles you wrote.")+'</p>'+
+  '<p class="meta" style="margin-top:20px">Team: refdigital@, ewurakua@, ange@ and serviceclient@kennysinternational.com.</p></div></div>';
+  $("#f-pw").addEventListener("submit",function(e){
+    e.preventDefault(); var f=this;
+    if(f.next.value!==f.again.value){ toast("The two new passwords do not match.",true); return; }
+    api("POST","/api/auth/password",{current:f.current.value,next:f.next.value}).then(function(){
+      S.user=null; showLogin("Password changed. Please sign in with your new password.");
+    }).catch(function(e){ if(e.message!=="signed-out") toast(e.message,true); });
+  });
+}
+
+/* ---------------- start ---------------- */
+fetch("/api/auth/me",{credentials:"same-origin"}).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
+  if(j && j.user){ S.user=j.user; startApp(); } else showLogin();
+}).catch(function(){ showLogin("The dashboard is not reachable right now."); });
+})();
+</script>
+</body>
+</html>
